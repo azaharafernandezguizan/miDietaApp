@@ -86,7 +86,7 @@ export default {
     getExplanationDivClass(){
         return this.isMobile ? 'explanationDiv mobileExplanation' : 'explanationDiv laptopExplanation'
     },
-    onClickCreateMenu() {
+    async onClickCreateMenu() {
          const meals = this.numberOfMeals != null 
                         ? this.mealOptions.filter(meal => meal.text == this.numberOfMeals)[0].value 
                         : null;
@@ -96,7 +96,7 @@ export default {
          const processed = this.numberOfProcessedMeals != null 
                         ? this.processedMealsOptions.filter(processed => processed.text == this.numberOfProcessedMeals)[0].value 
                         : null;
-         const isMenuCreated = menuService.setNewMenu(meals, processed, fruits); 
+         const isMenuCreated = await menuService.setNewMenu(meals, processed, fruits); 
         if(isMenuCreated){
             this.$router.push('menu');
         }

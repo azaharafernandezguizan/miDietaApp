@@ -2,11 +2,11 @@
   <div class="welcome">
     <h1>Tu Menú</h1>
     <div :class="getDayGroupClass()">
-      <div v-for="item in menuInfo" v-bind:key='item.Day'>
-      <h3>{{item.Day}}</h3>
-      <div v-for="meal in item.Meals" v-bind:key='meal.Name'>
-          <h4>{{meal.Name}}</h4>
-          <span>{{meal.Menu}}</span>
+      <div v-for="item in menuInfo" v-bind:key='item.day'>
+      <h3>{{item.day}}</h3>
+      <div v-for="meal in item.meals" v-bind:key='meal.name'>
+          <h4>{{meal.name}}</h4>
+          <span>{{meal.menu}}</span>
       </div>
     </div>
     </div>
@@ -21,6 +21,14 @@ export default {
   props: {
     msg: String
   },
+  data: function(){
+    return{
+      menuInfo: []
+    }
+  },
+  async created() {
+    this.menuInfo = await menuService.getCurrentMenu();
+  },
   computed:{
     isMobile : function() {
         if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -28,10 +36,7 @@ export default {
         } else {
             return false
         }
-      },
-    menuInfo: function() {
-      return menuService.getCurrentMenu();
-    }
+      }
   },
   methods:{
       getDayGroupClass() {
